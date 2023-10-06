@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 5749021484581426944}
   - component: {fileID: 1548873783685255812}
   m_Layer: 0
-  m_Name: Attack Icon
-  m_TagString: Untagged
+  m_Name: JumpIcon
+  m_TagString: jump
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

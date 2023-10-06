@@ -17,11 +17,12 @@ public class PlayerManager : MonoBehaviour
 
     private bool shouldStartRunning = false;
 
-    private bool isTriggerContact = false;
     private bool wasTriggered = false;
 
     private enum PlayerMovementState { run, jump, punch, roll }
     PlayerMovementState movementState = PlayerMovementState.jump;
+    private enum TriggerTypeState { run, jump, punch, roll, none }
+    private TriggerTypeState triggerType = TriggerTypeState.none;
 
 
     // Start is called before the first frame update
@@ -36,16 +37,17 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
         if (shouldStartRunning) rigidbody.velocity = new Vector2(moveSpeed, rigidbody.velocity.y);
-        if (Input.GetButtonDown("Jump") && IsGrounded() && !isTriggerContact)
+        if (Input.GetButtonDown("Jump") && IsGrounded() && triggerType == TriggerTypeState.none)
         {
             Jump();
         }
         UpdateAnimationState();
+        Debug.DrawRay(transform.position, Vector3.down * 2f, Color.red);
     }
 
     private void UpdateAnimationState()
     {
-        if (!isTriggerContact)
+        if (triggerType == TriggerTypeState.none)
         {
             if (IsGrounded())
             {
@@ -60,14 +62,33 @@ public class PlayerManager : MonoBehaviour
             }
 
         }
+        else if (triggerType == TriggerTypeState.jump)
+        {
+            if (IsGrounded())
+            {
+                wasTriggered = false;
+                moveSpeed = Constants.MoveSpeed;
+                jumpForce = Constants.JumpForce;
+                movementState = PlayerMovementState.run;
+                triggerType = TriggerTypeState.none;
+            }
+
+        }
         if (Input.GetButtonDown("Jump"))
         {
             wasTriggered = true;
-            if (isTriggerContact)
+            switch (triggerType)
             {
-                movementState = PlayerMovementState.roll;
-                collider2d.radius = Constants.PlayerColliderRadius / 2f;
-                // collider2d.offset = new Vector(c)
+                case TriggerTypeState.roll:
+                    movementState = PlayerMovementState.roll;
+                    collider2d.radius = Constants.PlayerColliderRadius / 2f;
+                    break;
+                case TriggerTypeState.jump:
+                    Jump();
+                    movementState = PlayerMovementState.jump;
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -81,15 +102,24 @@ public class PlayerManager : MonoBehaviour
 
     private bool IsGrounded(LayerMask? mask = null)
     {
-        bool grounded = Physics2D.BoxCast(
-            collider2d.bounds.center,
-            collider2d.bounds.size,
-            0f,
-            Vector2.down,
-            0.1f,
-            mask ?? layerMask
-        );
+        // bool grounded = Physics2D.BoxCast(
+        //     collider2d.bounds.center,
+        //     collider2d.bounds.size,
+        //     0f,
+        //     Vector2.down,
+        //     0.1f,
+        //     mask ?? layerMask
+        // );
+        // if (!shouldStartRunning) shouldStartRunning = grounded;
+        // return grounded;
+
+        // Calculate the position of the ray's origin at the bottom of the circle collider.
+        Vector2 rayOrigin = new Vector2(transform.position.x, transform.position.y - collider2d.radius);
+        // Cast a ray from the rayOrigin position downward.
+        bool grounded = Physics2D.Raycast(rayOrigin, Vector2.down, 1f, layerMask);
         if (!shouldStartRunning) shouldStartRunning = grounded;
+        // Debug draw the ray for visualization (optional).
+        Debug.DrawRay(rayOrigin, Vector2.down * 1f, Color.red);
         return grounded;
     }
     private void OnCollisionEnter2D(Collision2D other)
@@ -103,15 +133,26 @@ public class PlayerManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        jumpForce = 0f;
-        isTriggerContact = true;
+        switch (other.gameObject.name)
+        {
+            case "JumpIcon":
+                triggerType = TriggerTypeState.jump;
+                break;
+            case "RollPlatform":
+                jumpForce = 0f;
+                triggerType = TriggerTypeState.roll;
+                break;
+            default:
+                triggerType = TriggerTypeState.none;
+                break;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         if (!wasTriggered)
         {
-            isTriggerContact = false;
+            triggerType = TriggerTypeState.none;
         }
     }
     private void Die()
@@ -126,7 +167,8 @@ public class PlayerManager : MonoBehaviour
 
     private void ResetPlayerAnimation()
     {
-        isTriggerContact = false;
+        triggerType = TriggerTypeState.none;
         collider2d.radius = Constants.PlayerColliderRadius;
+        wasTriggered = false;
     }
 }
