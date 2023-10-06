@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Die
+  - StopObstacle
+  - Roll
   layers:
   - Default
   - TransparentFX
@@ -13,7 +15,7 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
+  - OutGround
   - 
   - 
   - 
@@ -47,4 +49,7 @@ TagManager:
     locked: 0
   - name: Terrain
     uniqueID: 3013817547
+    locked: 0
+  - name: OutGround
+    uniqueID: 565422967
     locked: 0

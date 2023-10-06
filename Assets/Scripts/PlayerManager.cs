@@ -8,17 +8,19 @@ using UnityEngine.SceneManagement;
 public class PlayerManager : MonoBehaviour
 {
     private Rigidbody2D rigidbody;
-    private CircleCollider2D boxCollider;
+    private CircleCollider2D collider2d;
     private Animator animator;
     [SerializeField] private LayerMask layerMask;
 
-    private float jumpForce = 7f;
-    private float moveSpeed = 5f;
+    private float jumpForce = Constants.JumpForce;
+    private float moveSpeed = Constants.MoveSpeed;
 
-    private bool punchAction = false;
     private bool shouldStartRunning = false;
 
-    private enum PlayerMovementState { run, jump, punch }
+    private bool isTriggerContact = false;
+    private bool wasTriggered = false;
+
+    private enum PlayerMovementState { run, jump, punch, roll }
     PlayerMovementState movementState = PlayerMovementState.jump;
 
 
@@ -26,7 +28,7 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
-        boxCollider = GetComponent<CircleCollider2D>();
+        collider2d = GetComponent<CircleCollider2D>();
         animator = GetComponent<Animator>();
     }
 
@@ -34,7 +36,7 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
         if (shouldStartRunning) rigidbody.velocity = new Vector2(moveSpeed, rigidbody.velocity.y);
-        if (Input.GetButtonDown("Jump") && IsGrounded())
+        if (Input.GetButtonDown("Jump") && IsGrounded() && !isTriggerContact)
         {
             Jump();
         }
@@ -43,21 +45,32 @@ public class PlayerManager : MonoBehaviour
 
     private void UpdateAnimationState()
     {
-        if (IsGrounded())
+        if (!isTriggerContact)
         {
-            movementState = PlayerMovementState.run;
-        }
-        else if (!IsGrounded())
-        {
-            movementState = PlayerMovementState.jump;
+            if (IsGrounded())
+            {
+                moveSpeed = Constants.MoveSpeed;
+                jumpForce = Constants.JumpForce;
+                movementState = PlayerMovementState.run;
+            }
+            else if (!IsGrounded())
+            {
+                moveSpeed = Constants.MoveSpeed - 5;
+                movementState = PlayerMovementState.jump;
+            }
+
         }
         if (Input.GetButtonDown("Jump"))
         {
-            if (punchAction)
+            wasTriggered = true;
+            if (isTriggerContact)
             {
-                movementState = PlayerMovementState.punch;
+                movementState = PlayerMovementState.roll;
+                collider2d.radius = Constants.PlayerColliderRadius / 2f;
+                // collider2d.offset = new Vector(c)
             }
         }
+
         animator.SetInteger("PlayerState", (int)movementState);
     }
 
@@ -69,8 +82,8 @@ public class PlayerManager : MonoBehaviour
     private bool IsGrounded(LayerMask? mask = null)
     {
         bool grounded = Physics2D.BoxCast(
-            boxCollider.bounds.center,
-            boxCollider.bounds.size,
+            collider2d.bounds.center,
+            collider2d.bounds.size,
             0f,
             Vector2.down,
             0.1f,
@@ -90,15 +103,17 @@ public class PlayerManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        punchAction = true;
         jumpForce = 0f;
-    }
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        punchAction = false;
-        jumpForce = 7f;
+        isTriggerContact = true;
     }
 
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (!wasTriggered)
+        {
+            isTriggerContact = false;
+        }
+    }
     private void Die()
     {
         animator.SetTrigger("Death");
@@ -107,5 +122,11 @@ public class PlayerManager : MonoBehaviour
     private void ReloadLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void ResetPlayerAnimation()
+    {
+        isTriggerContact = false;
+        collider2d.radius = Constants.PlayerColliderRadius;
     }
 }

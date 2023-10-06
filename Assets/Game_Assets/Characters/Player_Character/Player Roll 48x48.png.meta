@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 94d62fe6d55369b4ea9d46a3ca385aa5
+guid: 723265cb7b5aa9b47938eddee8c42a97
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 22
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player Death 64x64_0
+      name: Player Roll 48x48_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e2415e7173a833b41a592a7087d8784d
-      internalID: 501200676
+      spriteID: 561d977ea9ca4144b9d3f39467ccaf09
+      internalID: 1529459426
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Death 64x64_1
+      name: Player Roll 48x48_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 48
         y: 0
-        width: 64
-        height: 64
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,20 +145,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 74ab9dcf8303e5944b1d8168806ddfa4
-      internalID: -2087193121
+      spriteID: f15c84c0199e68c47b188eb391502e11
+      internalID: 137101520
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Death 64x64_2
+      name: Player Roll 48x48_2
       rect:
         serializedVersion: 2
-        x: 128
+        x: 96
         y: 0
-        width: 64
-        height: 64
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,20 +166,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 711c8279d5e0e244b8a91d06722e990b
-      internalID: 530629334
+      spriteID: 28e2b03b5fab4164b922a470683b4395
+      internalID: -345164834
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Death 64x64_3
+      name: Player Roll 48x48_3
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df88ac1eb4002db4e9344f0a31912927
+      internalID: 1379304183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Roll 48x48_4
       rect:
         serializedVersion: 2
         x: 192
         y: 0
-        width: 64
-        height: 64
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -187,20 +208,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bee70dd8a1b492f4493db3b2abbf0440
-      internalID: -958856293
+      spriteID: 6eeac4a607bd1a84b903f47521da337e
+      internalID: 1156213419
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Death 64x64_4
+      name: Player Roll 48x48_5
       rect:
         serializedVersion: 2
-        x: 256
+        x: 240
         y: 0
-        width: 64
-        height: 64
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,20 +229,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dbfc6605dbdcf3841a4e9f56fdb4be28
-      internalID: -437784274
+      spriteID: 2b1f02c58ab62e14aafd87d3432d9dc2
+      internalID: 968112996
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Death 64x64_5
+      name: Player Roll 48x48_6
       rect:
         serializedVersion: 2
-        x: 320
+        x: 288
         y: 0
-        width: 64
-        height: 64
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,92 +250,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 04319a56101d8d745b43d2a19a28b6bc
-      internalID: 601839537
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player Death 64x64_6
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b69efb40c75cb3b4fa9ba64d8978d634
-      internalID: 100265184
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player Death 64x64_7
-      rect:
-        serializedVersion: 2
-        x: 448
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 51ec986050c44e4408f7e24e8199aab1
-      internalID: -1190889684
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player Death 64x64_8
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3ebb35f2d4bdf68499ba8fd347985aa4
-      internalID: 1376567147
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player Death 64x64_9
-      rect:
-        serializedVersion: 2
-        x: 576
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 033c29e8a8f524347a3f75570ab0cf90
-      internalID: -1641576143
+      spriteID: d0fbda8093a0c954fa8bf335ca7e4c85
+      internalID: -1580675489
       vertices: []
       indices: 
       edges: []
@@ -330,16 +267,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Player Death 64x64_0: 501200676
-      Player Death 64x64_1: -2087193121
-      Player Death 64x64_2: 530629334
-      Player Death 64x64_3: -958856293
-      Player Death 64x64_4: -437784274
-      Player Death 64x64_5: 601839537
-      Player Death 64x64_6: 100265184
-      Player Death 64x64_7: -1190889684
-      Player Death 64x64_8: 1376567147
-      Player Death 64x64_9: -1641576143
+      Player Roll 48x48_0: 1529459426
+      Player Roll 48x48_1: 137101520
+      Player Roll 48x48_2: -345164834
+      Player Roll 48x48_3: 1379304183
+      Player Roll 48x48_4: 1156213419
+      Player Roll 48x48_5: 968112996
+      Player Roll 48x48_6: -1580675489
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
