@@ -9,9 +9,5 @@ namespace Assets.Game_Assets.Scripts
     public static class Constants
     {
         public static string FanTag = "Fan";
-        public static float MoveSpeed = 10;
-        public static float JumpForce = 10;
-
-        public static float PlayerColliderRadius = 0.9f;
     }
 }

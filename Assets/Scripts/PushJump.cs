@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PushJump : MonoBehaviour
 {
-    [SerializeField] private float yForce = 5f;
-    [SerializeField] private float xForce = 0f;
+    private float yForce = PlayerStatics.playerJumpForce * 1.7f;
+    private float xForce = PlayerStatics.playerMovementSpeed / 2f;
     private Animator animator;
 
     private void Start()

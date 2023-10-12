@@ -7,6 +7,9 @@ TagManager:
   - Die
   - StopObstacle
   - Roll
+  - jump
+  - SlowObstacle
+  - Stop
   layers:
   - Default
   - TransparentFX
@@ -43,6 +46,9 @@ TagManager:
   m_SortingLayers:
   - name: Background
     uniqueID: 3288647315
+    locked: 0
+  - name: SemiBG
+    uniqueID: 3168781265
     locked: 0
   - name: Default
     uniqueID: 0
