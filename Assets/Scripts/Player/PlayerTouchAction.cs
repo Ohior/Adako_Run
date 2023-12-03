@@ -24,7 +24,7 @@ public class PlayerTouchAction : MonoBehaviour
             playerColObj.offset = new Vector2(0, -0.5f);
             playerColObj.size = new Vector2(0.7f, 1f);
         }
-        else if (tagName == "Attack")
+        else if (tagName == "Attack" && Input.GetButtonDown("Jump"))
         {
             PlayerStatics.activateGrounded = false;
             PlayerStatics.movementState = PlayerStatics.PlayerMovementState.punch;
