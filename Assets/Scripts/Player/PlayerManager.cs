@@ -1,75 +1,127 @@
-using Assets.Game_Assets.Scripts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static PlayerStatics;
+
+
 
 public class PlayerManager : MonoBehaviour
 {
-    private Rigidbody2D rigidbody;
-    private CircleCollider2D collider2d;
+    private new Rigidbody2D rigidbody;
+    private CapsuleCollider2D collider2d;
     private Animator animator;
-    [SerializeField] private LayerMask layerMask;
+    [SerializeField] private LayerMask[] layerMask;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float groundCheckRadius;
+    private bool isTouchingGround;
+
+
 
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
-        collider2d = GetComponent<CircleCollider2D>();
+        collider2d = GetComponent<CapsuleCollider2D>();
         animator = GetComponent<Animator>();
     }
-
     private void Update()
     {
-        IsCommingDown();
-        if (!isPlayerStoped)
+        isTouchingGround = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, layerMask[0]) ??
+         Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, layerMask[1]);
+        if (PlayerStatics.activateGrounded)
         {
-            ManagePlayerAction();
+            if (isTouchingGround)
+            {
+                Debug.Log("Running");
+                if (!Input.GetButtonDown("Jump"))
+                {
+                    PlayerStatics.movementState = PlayerStatics.PlayerMovementState.run;
+                    rigidbody.velocity = new Vector2(PlayerStatics.playerMovementSpeed, rigidbody.velocity.y);
+                }
+                else
+                {
+                    MakePlayerJump();
+                }
+            }
+            else
+            {
+                PlayerStatics.movementState = PlayerStatics.PlayerMovementState.jump;
+            }
         }
-        animator.SetInteger("PlayerState", (int)movementState);
+
+        animator.SetInteger("PlayerState", (int)PlayerStatics.movementState);
     }
 
-    private void IsCommingDown()
+    private void MakePlayerJump()
     {
-        if (rigidbody.velocity.y > -0.1f) { isComingDown = true; }
+        rigidbody.velocity = new Vector2(rigidbody.velocity.x, PlayerStatics.playerJumpForce);
     }
 
-    private void ManagePlayerAction()
-    {
-        if (Input.GetButton("Jump") && IsGrounded()) { Jump(); }
-        else if (IsGrounded() && !Input.GetButton("Jump")) { Run(); }
-        //else if (IsGrounded()) { Run(); }
-        if (!IsGrounded())
-        {
-            movementState = PlayerMovementState.jump;
-        }
-    }
+}
 
-    private void Run()
-    {
-        rigidbody.velocity = new Vector2(playerMovementSpeed, 0f);
-        movementState = PlayerMovementState.run;
-        isComingDown = false;
-    }
+internal class CollitionDataClass
+{
+    public bool col;
+    public string tagName;
 
-    private void Jump()
+    public CollitionDataClass(bool col, string tagName)
     {
-        rigidbody.velocity = new Vector2(playerMovementSpeed / 2f, playerJumpForce);
-        movementState = PlayerMovementState.jump;
-    }
-    private bool IsGrounded(LayerMask? mask = null)
-    {
-        // Calculate the position of the ray's origin at the bottom of the circle collider.
-        Vector2 rayOrigin = new(transform.position.x, transform.position.y - collider2d.radius);
-        // Cast a ray from the rayOrigin position downward.
-        bool grounded = Physics2D.Raycast(rayOrigin, Vector2.down, 0.1f, layerMask);
-        //if (!shouldStartRunning) shouldStartRunning = grounded;
-        // Debug draw the ray for visualization (optional).
-        Debug.DrawRay(rayOrigin, Vector2.down * 0.1f, Color.red);
-        return grounded;
+        this.col = col;
+        this.tagName = tagName;
     }
 }
+
+
+//    private void Update()
+//    {
+//        IsCommingDown();
+//        if (!isPlayerStoped)
+//        {
+//            ManagePlayerAction();
+//        }
+//        animator.SetInteger("PlayerState", (int)movementState);
+//    }
+
+//    private void IsCommingDown()
+//    {
+//        if (rigidbody.velocity.y > -0.1f) { isComingDown = true; }
+//    }
+
+//    private void ManagePlayerAction()
+//    {
+//        if (Input.GetButton("Jump") && IsGrounded()) { Jump(); }
+//        else if (IsGrounded() && !Input.GetButton("Jump")) { Run(); }
+//        //else if (IsGrounded()) { Run(); }
+//        if (!IsGrounded())
+//        {
+//            movementState = PlayerMovementState.jump;
+//        }
+//    }
+
+//    private void Run()
+//    {
+//        rigidbody.velocity = new Vector2(playerMovementSpeed, 0f);
+//        movementState = PlayerMovementState.run;
+//        isComingDown = false;
+//    }
+
+//    private void Jump()
+//    {
+//        rigidbody.velocity = new Vector2(playerMovementSpeed / 2f, playerJumpForce);
+//        movementState = PlayerMovementState.jump;
+//    }
+//    private bool IsGrounded(LayerMask? mask = null)
+//    {
+//        // Calculate the position of the ray's origin at the bottom of the circle collider.
+//        Vector2 rayOrigin = new(transform.position.x, transform.position.y - collider2d.radius);
+//        // Cast a ray from the rayOrigin position downward.
+//        bool grounded = Physics2D.Raycast(rayOrigin, Vector2.down, 0.3f, layerMask);
+//        //if (!shouldStartRunning) shouldStartRunning = grounded;
+//        // Debug draw the ray for visualization (optional).
+//        Debug.DrawRay(rayOrigin, Vector2.down * 0.1f, Color.red);
+//        return grounded;
+//    }
+//}
 //public class PlayerManager : MonoBehaviour
 //{
 //    private Rigidbody2D rigidbody;
