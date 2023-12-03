@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerTouchAction : MonoBehaviour
 {
@@ -30,7 +31,25 @@ public class PlayerTouchAction : MonoBehaviour
             PlayerStatics.movementState = PlayerStatics.PlayerMovementState.punch;
             PlayerStatics.actionState = PlayerStatics.PlayerActionState.punch;
         }
+        else if (tagName == "Jump" && Input.GetButtonDown("Jump"))
+        {
+            playerRB.velocity = new Vector2(playerRB.velocity.x, PlayerStatics.playerJumpForce * 1.5f);
+        }
+        else if (tagName == "Stop")
+        {
+            PlayerStatics.activateGrounded = false;
+            PlayerStatics.movementState = PlayerStatics.PlayerMovementState.idle;
+            PlayerStatics.actionState = PlayerStatics.PlayerActionState.idle;
+            // playerRB.velocity = new Vector2(-12, 5f);
+            Invoke("ReloadLevel", 3);
+
+        }
         playerRB.velocity = new Vector2(PlayerStatics.playerMovementSpeed, playerRB.velocity.y);
+    }
+    private void ReloadLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        PlayerStatics.ResetDefalut();
     }
 
     private void OnTriggerStay2D(Collider2D other)

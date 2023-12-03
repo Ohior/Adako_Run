@@ -7,9 +7,12 @@ TagManager:
   - Die
   - StopObstacle
   - Roll
-  - jump
   - SlowObstacle
   - Stop
+  - Attack
+  - Enemy
+  - Jump
+  - jump
   layers:
   - Default
   - TransparentFX
