@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerGroundCheck : MonoBehaviour
+public class PlayerTouchAction : MonoBehaviour
 {
     [SerializeField] private GameObject playerGameObject;
     private Rigidbody2D playerRB;
@@ -23,6 +23,12 @@ public class PlayerGroundCheck : MonoBehaviour
             PlayerStatics.actionState = PlayerStatics.PlayerActionState.roll;
             playerColObj.offset = new Vector2(0, -0.5f);
             playerColObj.size = new Vector2(0.7f, 1f);
+        }
+        else if (tagName == "Attack")
+        {
+            PlayerStatics.activateGrounded = false;
+            PlayerStatics.movementState = PlayerStatics.PlayerMovementState.punch;
+            PlayerStatics.actionState = PlayerStatics.PlayerActionState.punch;
         }
         playerRB.velocity = new Vector2(PlayerStatics.playerMovementSpeed, playerRB.velocity.y);
     }
